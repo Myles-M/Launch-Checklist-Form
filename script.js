@@ -1,7 +1,7 @@
 // Write your JavaScript code here!
 
-let fuelCheck = false;
-let weightCheck = false;
+let fuelCheck = null;
+let weightCheck = null;
 let targetLocation = 
 
 fetch("https://handlers.education.launchcode.org/static/planets.json").then(
@@ -24,16 +24,18 @@ fetch("https://handlers.education.launchcode.org/static/planets.json").then(
 
  
 window.addEventListener("load", function() {
-   document.getElementById("missionTarget").innerHTML = '<p>hello</p>';
    let form = this.document.querySelector("form");
    form.addEventListener("submit", function(event) {
+
+      fuelCheck = false;
+      weightCheck = false;
 
       let pilot = document.getElementById("pilotName").value;
       let copilot = document.getElementById("copilotName").value;
       let fuel = document.getElementById("fuelLevel").value;
       let weight = document.getElementById("cargoWeight").value;
 
-      if (pilot =='' || copilot == '' || fuel =='' || weight =='' ){
+      if (pilot ==='' || copilot === '' || fuel ==='' || weight ==='' ){
          alert ("All fields are reqired!");
          event.preventDefault();
       } else
@@ -50,7 +52,7 @@ window.addEventListener("load", function() {
          document.getElementById("copilotStatus").innerHTML = `Co-pilot ${copilot} is ready for launch`;
 
          if (fuel < 10000){
-            document.getElementById("fuelStatus").innerHTML = "Fuel level to low for launch";
+            document.getElementById("fuelStatus").innerHTML = "Fuel level to low for launch";    
             event.preventDefault();
          }
          else {
@@ -62,29 +64,24 @@ window.addEventListener("load", function() {
             document.getElementById("cargoStatus").innerHTML ="Cargo mass too high for launch";
             event.preventDefault();
          }
-         else{
+         else {
             document.getElementById("cargoStatus").innerHTML ="Cargo mass low enogh for launch";
             weightCheck = true;
          }
-                
+           
 
          if (fuelCheck === true && weightCheck === true){
-            document.getElementById("launchStatus").innerHTML = "Shuttle Ready for Launch"
+            document.getElementById("launchStatus").innerHTML = "Shuttle Ready for Launch";
+            document.getElementById("launchStatus").style.color = "green";
          }
          else{
             document.getElementById("launchStatus").innerHTML = "Shuttle Not Ready for Launch";
             document.getElementById("launchStatus").style.color = "red";
          }
+         event.preventDefault();
       }
    });
 });
-
-
-
-
-
-
-
 
 
 /* This block of code shows how to format the HTML once you fetch some planetary JSON!
